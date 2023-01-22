@@ -1,5 +1,5 @@
 # higher-lower-lol-champ-web
-The frontend api code for the HigherLower LoL Champ edition project
+The frontend React code for the HigherLower LoL Champ edition project
 
 # Getting Started with Create React App
 
