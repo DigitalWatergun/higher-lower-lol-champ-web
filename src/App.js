@@ -1,16 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { getChampionData } from "./api/api";
-import { ChampCard } from "./components/ChampCard";
-
-const CardContainer = styled.div`
-    background-color: white;
-    width: 700px;
-    height: 700px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`
+import { ChampBoard } from "./components/ChampBoard";
+import { StartButton } from "./components/StartButton";
 
 const MainContainer = styled.div`
     background-color: gray;
@@ -30,10 +22,14 @@ const PageContainer = styled.div`
 `
 
 export const App = () => {
+    const [isPlaying, setIsPlaying] = useState(false);
     const [championData, setChampionData] = useState([]);
 
+    const handleIsPlaying = () => {
+        setIsPlaying(!isPlaying)
+    };
+
     useEffect(() => {
-        console.log(process.env.REACT_APP_API_URL);
         const callBackendApi = async () => {
             const response = await getChampionData();
             if (response.status === 200) {
@@ -44,16 +40,20 @@ export const App = () => {
         };
 
         callBackendApi();
+        console.log(process.env.REACT_APP_API_URL);
     }, []);
     
     return (
         <PageContainer>
             <MainContainer>
                 <h1>Higher Lower LoL Champ Edition</h1>
-                <CardContainer>
-                    <ChampCard position="left"/>
-                    <ChampCard position="right"/>
-                </CardContainer>
+                {
+                    isPlaying ? (<div>
+                        <ChampBoard gameState={isPlaying} setGameState={handleIsPlaying} championData={ championData } />
+                        <button onClick={handleIsPlaying}>End</button>
+                    </div>)
+                        : <StartButton setIsPlaying={handleIsPlaying} />
+                }
             </MainContainer>
         </PageContainer>
 

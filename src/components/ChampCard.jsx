@@ -12,9 +12,7 @@ export const ChampCard = (props) => {
 
     return (
         <ChampCardContainer position={props.position}>
-            <div>
-                <p>This is a Champ card</p>
-            </div>
+            <p>{ JSON.stringify(props.data) }</p>
         </ChampCardContainer>
     )
 };
