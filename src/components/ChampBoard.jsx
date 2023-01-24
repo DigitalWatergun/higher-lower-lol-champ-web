@@ -14,24 +14,58 @@ const CardContainer = styled.div`
 `
 
 export const ChampBoard = (props) => {
-    const [championData] = useState(props.championData); //["champ1", "champ2", "champ3", "champ4"]
+    // const [championData] = useState(props.championData); 
     const [gameState, setGameState] = useState(props.gameState)
     const [leftCardChamp, setLeftCardChamp] = useState([]);
     const [rightCardChamp, setRightCardChamp] = useState([]);
+    const [higherLower, setHigherLower] = useState(false);
+    let { score, handleScore } = props
+
+    let userChoice;
+    const checkUserChoice = (choice) => {
+        console.log("Score: " + score);
+        console.log("User Choice: " + choice, "HigherLower: " + higherLower)
+        if (choice === higherLower) {
+            score = score + 1
+            handleScore(score);
+            const newChamp = getRandomChamp(props.championData);
+            setLeftCardChamp(rightCardChamp);
+            setRightCardChamp(newChamp);
+            setHigherLower(parseInt(newChamp.matchesPlayed, 10) >= parseInt(rightCardChamp.matchesPlayed, 10))
+        } else {
+            setGameState(false)
+            props.setIsPlaying();
+            handleScore(0);
+        }
+    }
+
+
+    const handleHigherClick = () => {
+        userChoice = true
+        checkUserChoice(userChoice);
+    }
+
+    const handleLowerClick = () => {
+        userChoice = false
+        checkUserChoice(userChoice)
+    }
+
 
     useEffect(() => {
-        console.log(gameState)
-    },[]);
+        console.log("Game state: " + gameState)
+        const leftChamp = getRandomChamp(props.championData);
+        const rightChamp = getRandomChamp(props.championData);
+        const higherLower = parseInt(rightChamp.matchesPlayed, 10) >= parseInt(leftChamp.matchesPlayed, 10)
 
-    useEffect(() => {
-        setLeftCardChamp(getRandomChamp(championData));
-        setRightCardChamp(getRandomChamp(championData));
-    }, [gameState]);
+        setLeftCardChamp(leftChamp);
+        setRightCardChamp(rightChamp);
+        setHigherLower(higherLower);
+    }, []);
 
     return (
         <CardContainer>
             <ChampCard position="left" data={ leftCardChamp } />
-            <ChampCard position="right" data={ rightCardChamp} />
+            <ChampCard position="right" data={rightCardChamp} handleHigherClick={handleHigherClick} handleLowerClick={handleLowerClick} />
         </CardContainer>
     )
 }
