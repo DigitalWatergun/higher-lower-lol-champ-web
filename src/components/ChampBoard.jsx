@@ -4,6 +4,17 @@ import { ChampCard } from "./ChampCard";
 
 import { getRandomChamp } from "../util/getRandomChamp";
 
+const GameBoard = styled.div`
+    background-color: LightSlateGrey;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+
+const ScoreDisplay = styled.p`
+    margin: 5px;
+`
+
 const CardContainer = styled.div`
     background-color: white;
     width: 700px;
@@ -63,9 +74,12 @@ export const ChampBoard = (props) => {
     }, []);
 
     return (
-        <CardContainer>
-            <ChampCard position="left" data={ leftCardChamp } />
-            <ChampCard position="right" data={rightCardChamp} handleHigherClick={handleHigherClick} handleLowerClick={handleLowerClick} />
-        </CardContainer>
+        <GameBoard>
+            <ScoreDisplay>Score: {score}</ScoreDisplay>
+            <CardContainer>
+                <ChampCard position="left" data={ leftCardChamp } />
+                <ChampCard position="right" data={rightCardChamp} handleHigherClick={handleHigherClick} handleLowerClick={handleLowerClick} />
+            </CardContainer>
+        </GameBoard>
     )
 }

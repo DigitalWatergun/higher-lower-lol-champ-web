@@ -223,7 +223,6 @@ export const App = () => {
                             handleScore={handleScore}
                             setIsPlaying={handleIsPlaying} />
                         <button onClick={handleIsPlaying}>End</button>
-                        <p>{score}</p>
                     </div>)
                         : <StartButton setIsPlaying={handleIsPlaying} />
                 }

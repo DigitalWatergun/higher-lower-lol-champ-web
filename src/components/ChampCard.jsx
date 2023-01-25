@@ -24,10 +24,10 @@ const ChampCardInfo = styled.div`
 `
 
 export const ChampCard = (props) => { 
-    const { handleHigherClick, handleLowerClick } = props
+    const { position, data, handleHigherClick, handleLowerClick } = props
 
     return (
-        <ChampCardContainer position={props.position} bgImg={props.data.loadingScreenUrl}>
+        <ChampCardContainer position={position} bgImg={data.loadingScreenUrl}>
             <ChampCardInfo>
                 <p>{JSON.stringify(props.data.championName)}</p>
                 <p>has</p>
