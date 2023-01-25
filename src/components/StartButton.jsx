@@ -8,7 +8,8 @@ const Button = styled.button`
 `
 
 export const StartButton = (props) => {
+    const { start } = props;
 
-    return (<Button onClick={props.setIsPlaying}>Start
+    return (<Button onClick={start}>Start
     </Button> )
 }

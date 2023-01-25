@@ -22,6 +22,8 @@ const PageContainer = styled.div`
 `
 
 export const App = () => {
+    const [gameState, setGameState] = useState("start");
+    const [display, setDisplay] = useState()
     const [isPlaying, setIsPlaying] = useState(false);
     const [championData, setChampionData] = useState([]);
     const [score, setScore] = useState(0);
@@ -30,8 +32,25 @@ export const App = () => {
         setIsPlaying(!isPlaying)
     };
 
-    const handleScore = (newScore) => {
-        setScore(newScore);
+    const startGame = () => {
+        console.log("Starting game...")
+        setGameState("play");
+        setDisplay((<div>
+            <ChampBoard gameState={gameState}
+                setGameState={handleIsPlaying}
+                championData={championData}
+                score={score}
+                setScore={setScore}
+                setIsPlaying={handleIsPlaying} 
+                endGame={endGame}
+                />
+            <button onClick={endGame}>End</button>
+        </div>))
+    }
+
+    const endGame = (currentScore) => {
+        setGameState("end");
+        setDisplay(<div>Game Over. Score: {currentScore}</div>)
     }
 
     useEffect(() => {
@@ -214,18 +233,7 @@ export const App = () => {
         <PageContainer>
             <MainContainer>
                 <h1>Higher Lower LoL Champ Edition</h1>
-                {
-                    isPlaying ? (<div>
-                        <ChampBoard gameState={isPlaying}
-                            setGameState={handleIsPlaying}
-                            championData={championData}
-                            score={score}
-                            handleScore={handleScore}
-                            setIsPlaying={handleIsPlaying} />
-                        <button onClick={handleIsPlaying}>End</button>
-                    </div>)
-                        : <StartButton setIsPlaying={handleIsPlaying} />
-                }
+                {gameState === "start" ? <StartButton start={startGame} /> : <div>{display}</div>}
             </MainContainer>
         </PageContainer>
 

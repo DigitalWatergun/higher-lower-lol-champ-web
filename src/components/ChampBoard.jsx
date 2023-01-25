@@ -26,27 +26,24 @@ const CardContainer = styled.div`
 
 export const ChampBoard = (props) => {
     // const [championData] = useState(props.championData); 
-    const [gameState, setGameState] = useState(props.gameState)
     const [leftCardChamp, setLeftCardChamp] = useState([]);
     const [rightCardChamp, setRightCardChamp] = useState([]);
     const [higherLower, setHigherLower] = useState(false);
-    let { score, handleScore } = props
+    const [currentScore, setCurrentScore] = useState(0);
+    const { gameState } = props;
 
     let userChoice;
     const checkUserChoice = (choice) => {
-        console.log("Score: " + score);
+        console.log("Score: " + currentScore);
         console.log("User Choice: " + choice, "HigherLower: " + higherLower)
         if (choice === higherLower) {
-            score = score + 1
-            handleScore(score);
+            setCurrentScore(currentScore + 1);
             const newChamp = getRandomChamp(props.championData);
             setLeftCardChamp(rightCardChamp);
             setRightCardChamp(newChamp);
             setHigherLower(parseInt(newChamp.matchesPlayed, 10) >= parseInt(rightCardChamp.matchesPlayed, 10))
         } else {
-            setGameState(false)
-            props.setIsPlaying();
-            handleScore(0);
+            props.endGame(currentScore);
         }
     }
 
@@ -75,7 +72,7 @@ export const ChampBoard = (props) => {
 
     return (
         <GameBoard>
-            <ScoreDisplay>Score: {score}</ScoreDisplay>
+            <ScoreDisplay>Score: {currentScore}</ScoreDisplay>
             <CardContainer>
                 <ChampCard position="left" data={ leftCardChamp } />
                 <ChampCard position="right" data={rightCardChamp} handleHigherClick={handleHigherClick} handleLowerClick={handleLowerClick} />
