@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { getChampionData } from "./api/api";
+import summonersRift from "./images/summoners_rift.png";
 import { ChampBoard } from "./components/ChampBoard";
 import { StartButton } from "./components/StartButton";
 import { GameOver } from "./components/GameOver";
@@ -17,6 +18,10 @@ const MainContainer = styled.div`
 const PageContainer = styled.div`
     display: flex;
     background-color: black;
+    background: url(${props => props.bgImg});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     align-items: center;
     justify-content: center;
     height: 100vh;
@@ -73,7 +78,7 @@ export const App = () => {
     }, []);
     
     return (
-        <PageContainer>
+        <PageContainer bgImg={summonersRift}>
             <MainContainer>
                 <h1>Higher Lower LoL Champ Edition</h1>
                 {gameState === "start" ? <StartButton start={startGame} message="START"/> : <div>{display}</div>}
