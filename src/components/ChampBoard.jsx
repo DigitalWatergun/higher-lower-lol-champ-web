@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { ChampCard } from "./ChampCard";
-
 import { getRandomChamp } from "../util/getRandomChamp";
 
 const GameBoard = styled.div`
@@ -25,12 +24,11 @@ const CardContainer = styled.div`
 `
 
 export const ChampBoard = (props) => {
-    // const [championData] = useState(props.championData); 
+    const { gameState, championData } = props;
     const [leftCardChamp, setLeftCardChamp] = useState([]);
     const [rightCardChamp, setRightCardChamp] = useState([]);
     const [higherLower, setHigherLower] = useState(false);
     const [currentScore, setCurrentScore] = useState(0);
-    const { gameState } = props;
 
     let userChoice;
     const checkUserChoice = (choice) => {
@@ -38,7 +36,7 @@ export const ChampBoard = (props) => {
         console.log("User Choice: " + choice, "HigherLower: " + higherLower)
         if (choice === higherLower) {
             setCurrentScore(currentScore + 1);
-            const newChamp = getRandomChamp(props.championData);
+            const newChamp = getRandomChamp(championData);
             setLeftCardChamp(rightCardChamp);
             setRightCardChamp(newChamp);
             setHigherLower(parseInt(newChamp.matchesPlayed, 10) >= parseInt(rightCardChamp.matchesPlayed, 10))
@@ -61,20 +59,20 @@ export const ChampBoard = (props) => {
 
     useEffect(() => {
         console.log("Game state: " + gameState)
-        const leftChamp = getRandomChamp(props.championData);
-        const rightChamp = getRandomChamp(props.championData);
+        const leftChamp = getRandomChamp(championData);
+        const rightChamp = getRandomChamp(championData);
         const higherLower = parseInt(rightChamp.matchesPlayed, 10) >= parseInt(leftChamp.matchesPlayed, 10)
 
         setLeftCardChamp(leftChamp);
         setRightCardChamp(rightChamp);
         setHigherLower(higherLower);
-    }, []);
+    }, [gameState, championData]);
 
     return (
         <GameBoard>
             <ScoreDisplay>Score: {currentScore}</ScoreDisplay>
             <CardContainer>
-                <ChampCard position="left" data={ leftCardChamp } />
+                <ChampCard position="left" data={leftCardChamp} />
                 <ChampCard position="right" data={rightCardChamp} handleHigherClick={handleHigherClick} handleLowerClick={handleLowerClick} />
             </CardContainer>
         </GameBoard>

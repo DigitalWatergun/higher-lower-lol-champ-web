@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const ChampCardContainer = styled.div`
@@ -13,14 +13,22 @@ const ChampCardContainer = styled.div`
     background-size: cover;
 `
 
-const ChampCardInfo = styled.div`
+const ChampCardInfoContainer = styled.div`
     width: 300px;
-    height: 75px;
-    background-color: transparent;
+    height: 150px;
+    display: flex;
+    align-self: flex-end;
+    justify-content: center;
+    background: linear-gradient(transparent 0%, black 100%);
+`
+
+const ChampCardInfo = styled.div`
+    margin-bottom: 20px;
+    color: white;
+    display: flex;
     align-self: flex-end;
     text-align: center;
-    color: white;
-    background: ${props => props.bgImg}
+    flex-direction: column;
 `
 
 export const ChampCard = (props) => { 
@@ -28,15 +36,17 @@ export const ChampCard = (props) => {
 
     return (
         <ChampCardContainer position={position} bgImg={data.loadingScreenUrl}>
-            <ChampCardInfo>
-                <p>{JSON.stringify(props.data.championName)}</p>
-                <p>has</p>
-                {props.position === "right" ? <div>
-                    <button onClick={handleHigherClick}>Higher</button>
-                    <button onClick={handleLowerClick}>Lower</button>
-                </div>: <p>{JSON.stringify(props.data.matchesPlayed)}</p>}
-                <p>matches played.</p>
-            </ChampCardInfo>
+            <ChampCardInfoContainer>
+                <ChampCardInfo>
+                    <p>{JSON.stringify(props.data.championName)}</p>
+                    <p>has</p>
+                    {props.position === "right" ? <div>
+                        <button onClick={handleHigherClick}>Higher</button>
+                        <button onClick={handleLowerClick}>Lower</button>
+                    </div>: <p>{JSON.stringify(props.data.matchesPlayed)}</p>}
+                    <p>matches played.</p>
+                </ChampCardInfo>
+            </ChampCardInfoContainer>
         </ChampCardContainer>
     )
 };
