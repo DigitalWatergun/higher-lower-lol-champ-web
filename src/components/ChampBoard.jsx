@@ -27,22 +27,27 @@ export const ChampBoard = (props) => {
     const { gameState, championData } = props;
     const [leftCardChamp, setLeftCardChamp] = useState([]);
     const [rightCardChamp, setRightCardChamp] = useState([]);
+    const [coverResult, setCoverResult] = useState(true);
     const [higherLower, setHigherLower] = useState(false);
     const [currentScore, setCurrentScore] = useState(0);
 
     let userChoice;
     const checkUserChoice = (choice) => {
+        setCoverResult(false);
         console.log("Score: " + currentScore);
         console.log("User Choice: " + choice, "HigherLower: " + higherLower)
-        if (choice === higherLower) {
-            setCurrentScore(currentScore + 1);
-            const newChamp = getRandomChamp(championData);
-            setLeftCardChamp(rightCardChamp);
-            setRightCardChamp(newChamp);
-            setHigherLower(parseInt(newChamp.matchesPlayed, 10) >= parseInt(rightCardChamp.matchesPlayed, 10))
-        } else {
-            props.endGame(currentScore);
-        }
+        setTimeout(() => {
+            if (choice === higherLower) {
+                setCurrentScore(currentScore + 1);
+                const newChamp = getRandomChamp(championData);
+                setLeftCardChamp(rightCardChamp);
+                setRightCardChamp(newChamp);
+                setCoverResult(true);
+                setHigherLower(parseInt(newChamp.matchesPlayed, 10) >= parseInt(rightCardChamp.matchesPlayed, 10))
+            } else {
+                props.endGame(currentScore);
+            }
+        }, 1000);
     }
 
 
@@ -72,8 +77,8 @@ export const ChampBoard = (props) => {
         <GameBoard>
             <ScoreDisplay>Score: {currentScore}</ScoreDisplay>
             <CardContainer>
-                <ChampCard position="left" data={leftCardChamp} />
-                <ChampCard position="right" data={rightCardChamp} handleHigherClick={handleHigherClick} handleLowerClick={handleLowerClick} />
+                <ChampCard data={leftCardChamp} />
+                <ChampCard coverResult={coverResult} data={rightCardChamp} handleHigherClick={handleHigherClick} handleLowerClick={handleLowerClick} />
             </CardContainer>
         </GameBoard>
     )

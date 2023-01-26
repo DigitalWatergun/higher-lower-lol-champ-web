@@ -5,7 +5,6 @@ const ChampCardContainer = styled.div`
     width: 300px;
     height: 600px;
     margin: 25px;
-    background-color: ${props => props.position === "left" ? "red" : "blue"};
     display: flex;
     background: url(${props => props.bgImg});
     background-repeat: no-repeat;
@@ -32,18 +31,18 @@ const ChampCardInfo = styled.div`
 `
 
 export const ChampCard = (props) => { 
-    const { position, data, handleHigherClick, handleLowerClick } = props
+    const { coverResult, data, handleHigherClick, handleLowerClick } = props
 
     return (
-        <ChampCardContainer position={position} bgImg={data.loadingScreenUrl}>
+        <ChampCardContainer bgImg={data.loadingScreenUrl}>
             <ChampCardInfoContainer>
                 <ChampCardInfo>
                     <p>{JSON.stringify(props.data.championName)}</p>
                     <p>has</p>
-                    {props.position === "right" ? <div>
+                    { coverResult ? <div>
                         <button onClick={handleHigherClick}>Higher</button>
                         <button onClick={handleLowerClick}>Lower</button>
-                    </div>: <p>{JSON.stringify(props.data.matchesPlayed)}</p>}
+                    </div>: <p>{JSON.stringify(data.matchesPlayed)}</p>}
                     <p>matches played.</p>
                 </ChampCardInfo>
             </ChampCardInfoContainer>
