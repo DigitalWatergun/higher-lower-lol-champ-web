@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { getChampionData } from "./api/api";
 import { ChampBoard } from "./components/ChampBoard";
 import { StartButton } from "./components/StartButton";
+import { GameOver } from "./components/GameOver";
 
 const MainContainer = styled.div`
     background-color: gray;
@@ -50,7 +51,7 @@ export const App = () => {
 
     const endGame = (currentScore) => {
         setGameState("end");
-        setDisplay(<div>Game Over. Score: {currentScore}</div>)
+        setDisplay(<GameOver score={currentScore} start={startGame} />)
     }
 
     useEffect(() => {
@@ -233,7 +234,7 @@ export const App = () => {
         <PageContainer>
             <MainContainer>
                 <h1>Higher Lower LoL Champ Edition</h1>
-                {gameState === "start" ? <StartButton start={startGame} /> : <div>{display}</div>}
+                {gameState === "start" ? <StartButton start={startGame} message="START"/> : <div>{display}</div>}
             </MainContainer>
         </PageContainer>
 

@@ -8,8 +8,7 @@ const Button = styled.button`
 `
 
 export const StartButton = (props) => {
-    const { start } = props;
+    const { start, message } = props;
 
-    return (<Button onClick={start}>Start
-    </Button> )
+    return (<Button onClick={start}>{message}</Button>)
 }
