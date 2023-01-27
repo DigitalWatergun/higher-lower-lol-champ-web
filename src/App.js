@@ -10,6 +10,8 @@ import { sampleChampionData } from "./util/sampleChampionData";
 
 const MainContainer = styled.div`
     background-color: gray;
+    width: 800px;
+    height: 750px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,10 +25,17 @@ const PageContainer = styled.div`
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
     width: 100vw;
+`
+
+const TextContainer = styled.p`
+    font-family: 'Roboto', sans-serif;
+    font-size: ${props => props.fontSize};
+    color: white;
 `
 
 export const App = () => {
@@ -81,8 +90,9 @@ export const App = () => {
     
     return (
         <PageContainer bgImg={bgImg}>
+            <TextContainer fontSize="70px">HIGHER LOWER</TextContainer>
+            <TextContainer fontSize="30px">League of Legends Champion Edition</TextContainer>
             <MainContainer>
-                <h1>Higher Lower LoL Champ Edition</h1>
                 {display}
             </MainContainer>
         </PageContainer>
