@@ -4,7 +4,7 @@ import { getChampionData } from "./api/api";
 import summonersRift from "./images/summoners_rift.png";
 import summonersRiftGray from "./images/summoners_rift_bw.png";
 import { ChampBoard } from "./components/ChampBoard";
-import { StartButton } from "./components/StartButton";
+import { StartScreen } from "./components/StartScreen";
 import { GameOver } from "./components/GameOver";
 import { sampleChampionData } from "./util/sampleChampionData";
 
@@ -20,7 +20,6 @@ const MainContainer = styled.div`
 
 const PageContainer = styled.div`
     display: flex;
-    background-color: black;
     background: url(${props => props.bgImg});
     background-repeat: no-repeat;
     background-position: center;
@@ -32,7 +31,7 @@ const PageContainer = styled.div`
     width: 100vw;
 `
 
-const TextContainer = styled.p`
+const TextContainer = styled.div`
     font-family: 'Roboto', sans-serif;
     font-size: ${props => props.fontSize};
     color: white;
@@ -72,7 +71,7 @@ export const App = () => {
     useEffect(() => {
         console.log("Initializing...")
         setBgImg(summonersRift);
-        setDisplay(<StartButton start={startGame} message="START"/>)
+        setDisplay(<StartScreen start={startGame} message="START"/>)
         // const callBackendApi = async () => {
         //     console.log("Retrieving champion data...")
         //     const response = await getChampionData();

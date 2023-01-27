@@ -1,0 +1,1 @@
+export const introText = "Inspired by the original HigherLower game, this is a version of the game where you can guess which League of Legends champion has higher or lower matches played in the latest patch."
