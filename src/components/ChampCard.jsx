@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { formatMatchesPlayed, formatChampNames } from "../util/textFormatter";
 
 const ChampCardContainer = styled.div`
     width: 300px;
@@ -37,12 +38,12 @@ export const ChampCard = (props) => {
         <ChampCardContainer bgImg={data.loadingScreenUrl}>
             <ChampCardInfoContainer>
                 <ChampCardInfo>
-                    <p>{JSON.stringify(props.data.championName)}</p>
+                    <p>{formatChampNames(data.championName)}</p>
                     <p>has</p>
                     { coverResult ? <div>
                         <button onClick={handleHigherClick}>Higher</button>
                         <button onClick={handleLowerClick}>Lower</button>
-                    </div>: <p>{JSON.stringify(data.matchesPlayed)}</p>}
+                    </div>: <p>{formatMatchesPlayed(data.matchesPlayed)}</p>}
                     <p>matches played.</p>
                 </ChampCardInfo>
             </ChampCardInfoContainer>

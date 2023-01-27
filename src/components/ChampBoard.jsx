@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { ChampCard } from "./ChampCard";
 import { getRandomChamp } from "../util/getRandomChamp";
@@ -28,11 +28,11 @@ const VSContainer = styled.div`
 `
 
 export const ChampBoard = (props) => {
-    const { gameState, championData } = props;
-    const [leftCardChamp, setLeftCardChamp] = useState([]);
-    const [rightCardChamp, setRightCardChamp] = useState([]);
+    const { championData } = props;
+    const [leftCardChamp, setLeftCardChamp] = useState(getRandomChamp(championData));
+    const [rightCardChamp, setRightCardChamp] = useState(getRandomChamp(championData));
     const [coverResult, setCoverResult] = useState(true);
-    const [higherLower, setHigherLower] = useState(false);
+    const [higherLower, setHigherLower] = useState(parseInt(rightCardChamp.matchesPlayed, 10) >= parseInt(leftCardChamp.matchesPlayed, 10));
     const [currentScore, setCurrentScore] = useState(0);
     const [vsColor, setVSColor] = useState("gray");
 
@@ -54,8 +54,8 @@ export const ChampBoard = (props) => {
                 const newChamp = getRandomChamp(championData);
                 setLeftCardChamp(rightCardChamp);
                 setRightCardChamp(newChamp);
+                setHigherLower(parseInt(newChamp.matchesPlayed, 10) >= parseInt(rightCardChamp.matchesPlayed, 10));
                 setCoverResult(true);
-                setHigherLower(parseInt(newChamp.matchesPlayed, 10) >= parseInt(rightCardChamp.matchesPlayed, 10))
                 setVSColor("gray");
             } else {
                 props.endGame(currentScore);
@@ -65,26 +65,14 @@ export const ChampBoard = (props) => {
 
 
     const handleHigherClick = () => {
-        userChoice = true
+        userChoice = true;
         checkUserChoice(userChoice);
     }
 
     const handleLowerClick = () => {
-        userChoice = false
-        checkUserChoice(userChoice)
+        userChoice = false;
+        checkUserChoice(userChoice);
     }
-
-
-    useEffect(() => {
-        console.log("Game state: " + gameState)
-        const leftChamp = getRandomChamp(championData);
-        const rightChamp = getRandomChamp(championData);
-        const higherLower = parseInt(rightChamp.matchesPlayed, 10) >= parseInt(leftChamp.matchesPlayed, 10)
-
-        setLeftCardChamp(leftChamp);
-        setRightCardChamp(rightChamp);
-        setHigherLower(higherLower);
-    }, [gameState, championData]);
 
     return (
         <GameBoard>

@@ -29,7 +29,6 @@ const PageContainer = styled.div`
 `
 
 export const App = () => {
-    const [gameState, setGameState] = useState("start");
     const [display, setDisplay] = useState()
     const [isPlaying, setIsPlaying] = useState(false);
     const [championData, setChampionData] = useState([]);
@@ -41,9 +40,8 @@ export const App = () => {
 
     const startGame = () => {
         console.log("Starting game...")
-        setGameState("play");
         setDisplay((<div>
-            <ChampBoard gameState={gameState}
+            <ChampBoard 
                 setGameState={handleIsPlaying}
                 championData={championData}
                 score={score}
@@ -55,11 +53,12 @@ export const App = () => {
     }
 
     const endGame = (currentScore) => {
-        setGameState("end");
         setDisplay(<GameOver score={currentScore} start={startGame} />)
     }
 
     useEffect(() => {
+        console.log("Initializing...")
+        setDisplay(<StartButton start={startGame} message="START"/>)
         // const callBackendApi = async () => {
         //     console.log("Retrieving champion data...")
         //     const response = await getChampionData();
@@ -72,17 +71,15 @@ export const App = () => {
 
         // callBackendApi();
         setChampionData(sampleChampionData);
-
-        console.log(process.env.REACT_APP_API_URL);
-    }, []);
+        // eslint-disable-next-line
+    }, [championData]);
     
     return (
         <PageContainer bgImg={summonersRift}>
             <MainContainer>
                 <h1>Higher Lower LoL Champ Edition</h1>
-                {gameState === "start" ? <StartButton start={startGame} message="START"/> : <div>{display}</div>}
+                {display}
             </MainContainer>
         </PageContainer>
-
     );
 };
