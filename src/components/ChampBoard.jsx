@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { ChampCard } from "./ChampCard";
 import { getRandomChamp } from "../util/getRandomChamp";
+import vsDefault from "../images/vs_default.png";
+import vsCorrect from "../images/vs_correct.png";
+import vsWrong from "../images/vs_wrong.png";
 
 const GameBoard = styled.div`
     background-color: LightSlateGrey;
@@ -15,16 +18,19 @@ const ScoreDisplay = styled.p`
 `
 
 const CardContainer = styled.div`
-    background-color: white;
+    background-color: gray;
     display: flex;
     align-items: center;
     justify-content: center;
 `
 
 const VSContainer = styled.div`
-    width: 100px;
-    height: 100px;
-    background-color: ${props => props.color};
+    width: 82px;
+    height: 82px;
+    background: url(${props => props.color});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 `
 
 export const ChampBoard = (props) => {
@@ -34,7 +40,7 @@ export const ChampBoard = (props) => {
     const [coverResult, setCoverResult] = useState(true);
     const [higherLower, setHigherLower] = useState(parseInt(rightCardChamp.matchesPlayed, 10) >= parseInt(leftCardChamp.matchesPlayed, 10));
     const [currentScore, setCurrentScore] = useState(0);
-    const [vsColor, setVSColor] = useState("gray");
+    const [vsImg, setVSImg] = useState(vsDefault);
 
     let userChoice;
     const checkUserChoice = (choice) => {
@@ -43,9 +49,9 @@ export const ChampBoard = (props) => {
         console.log("User Choice: " + choice, "HigherLower: " + higherLower)
         setTimeout(() => {
             if (choice === higherLower) {
-                setVSColor("green")
+                setVSImg(vsCorrect);
             } else {
-                setVSColor("red")
+                setVSImg(vsWrong);
             }
         }, 1000)
         setTimeout(() => {
@@ -56,7 +62,7 @@ export const ChampBoard = (props) => {
                 setRightCardChamp(newChamp);
                 setHigherLower(parseInt(newChamp.matchesPlayed, 10) >= parseInt(rightCardChamp.matchesPlayed, 10));
                 setCoverResult(true);
-                setVSColor("gray");
+                setVSImg(vsDefault);
             } else {
                 props.endGame(currentScore);
             }
@@ -76,12 +82,12 @@ export const ChampBoard = (props) => {
 
     return (
         <GameBoard>
-            <ScoreDisplay>Score: {currentScore}</ScoreDisplay>
             <CardContainer>
                 <ChampCard data={leftCardChamp} />
-                <VSContainer color={vsColor} />
+                <VSContainer color={vsImg} />
                 <ChampCard coverResult={coverResult} data={rightCardChamp} handleHigherClick={handleHigherClick} handleLowerClick={handleLowerClick} />
             </CardContainer>
+            <ScoreDisplay>Score: {currentScore}</ScoreDisplay>
         </GameBoard>
     )
 }
