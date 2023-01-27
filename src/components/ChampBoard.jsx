@@ -16,11 +16,15 @@ const ScoreDisplay = styled.p`
 
 const CardContainer = styled.div`
     background-color: white;
-    width: 700px;
-    height: 700px;
     display: flex;
     align-items: center;
     justify-content: center;
+`
+
+const VSContainer = styled.div`
+    width: 100px;
+    height: 100px;
+    background-color: ${props => props.color};
 `
 
 export const ChampBoard = (props) => {
@@ -30,6 +34,7 @@ export const ChampBoard = (props) => {
     const [coverResult, setCoverResult] = useState(true);
     const [higherLower, setHigherLower] = useState(false);
     const [currentScore, setCurrentScore] = useState(0);
+    const [vsColor, setVSColor] = useState("gray");
 
     let userChoice;
     const checkUserChoice = (choice) => {
@@ -38,16 +43,24 @@ export const ChampBoard = (props) => {
         console.log("User Choice: " + choice, "HigherLower: " + higherLower)
         setTimeout(() => {
             if (choice === higherLower) {
+                setVSColor("green")
+            } else {
+                setVSColor("red")
+            }
+        }, 1000)
+        setTimeout(() => {
+            if (choice === higherLower) {
                 setCurrentScore(currentScore + 1);
                 const newChamp = getRandomChamp(championData);
                 setLeftCardChamp(rightCardChamp);
                 setRightCardChamp(newChamp);
                 setCoverResult(true);
                 setHigherLower(parseInt(newChamp.matchesPlayed, 10) >= parseInt(rightCardChamp.matchesPlayed, 10))
+                setVSColor("gray");
             } else {
                 props.endGame(currentScore);
             }
-        }, 1000);
+        }, 2000);
     }
 
 
@@ -78,6 +91,7 @@ export const ChampBoard = (props) => {
             <ScoreDisplay>Score: {currentScore}</ScoreDisplay>
             <CardContainer>
                 <ChampCard data={leftCardChamp} />
+                <VSContainer color={vsColor} />
                 <ChampCard coverResult={coverResult} data={rightCardChamp} handleHigherClick={handleHigherClick} handleLowerClick={handleLowerClick} />
             </CardContainer>
         </GameBoard>

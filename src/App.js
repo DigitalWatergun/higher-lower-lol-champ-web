@@ -51,7 +51,6 @@ export const App = () => {
                 setIsPlaying={handleIsPlaying} 
                 endGame={endGame}
                 />
-            <button onClick={endGame}>End</button>
         </div>))
     }
 
