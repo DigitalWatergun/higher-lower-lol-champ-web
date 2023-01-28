@@ -8,6 +8,7 @@ const StartContainer = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    margin-bottom: 50px;
 `
 
 const TextContainer = styled.div`
@@ -17,7 +18,7 @@ const TextContainer = styled.div`
     align-self: flex-start;
     margin-left: 20px;
     margin-right: 20px;
-    margin-bottom: 450px;
+    margin-bottom: 400px;
     text-align: center;
 `
 
@@ -25,7 +26,7 @@ export const StartScreen = (props) => {
     const { start, message } = props;
 
     return (<StartContainer>
-        <TextContainer>{introText}</TextContainer>
+        <TextContainer fontSize="18px">{introText}</TextContainer>
         <PlayButton start={start} message={message}></PlayButton>
     </StartContainer>
     )

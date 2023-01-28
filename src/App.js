@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import styled from "styled-components";
 import { getChampionData } from "./api/api";
 import summonersRift from "./images/summoners_rift.png";
@@ -9,7 +9,6 @@ import { GameOver } from "./components/GameOver";
 import { sampleChampionData } from "./util/sampleChampionData";
 
 const MainContainer = styled.div`
-    background-color: gray;
     width: 800px;
     height: 750px;
     display: flex;
@@ -72,20 +71,22 @@ export const App = () => {
         console.log("Initializing...")
         setBgImg(summonersRift);
         setDisplay(<StartScreen start={startGame} message="START"/>)
-        // const callBackendApi = async () => {
-        //     console.log("Retrieving champion data...")
-        //     const response = await getChampionData();
-        //     if (response.status === 200) {
-        //         setChampionData(response.data);
-        //     } else {
-        //         console.log(response);
-        //     }
-        // };
-
-        // callBackendApi();
-        setChampionData(sampleChampionData);
         // eslint-disable-next-line
     }, [championData]);
+
+    useMemo(() => {
+        const callBackendApi = async () => {
+            console.log("Retrieving champion data...")
+            const response = await getChampionData();
+            if (response.status === 200) {
+                setChampionData(response.data);
+            } else {
+                setChampionData(sampleChampionData);
+            }
+        };
+
+        callBackendApi();
+    }, [])
     
     return (
         <PageContainer bgImg={bgImg}>

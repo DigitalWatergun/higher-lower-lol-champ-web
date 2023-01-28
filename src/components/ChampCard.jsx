@@ -31,6 +31,36 @@ const ChampCardInfo = styled.div`
     flex-direction: column;
 `
 
+const TextContainer = styled.div`
+    font-family: 'Roboto', sans-serif;
+    font-size: ${props => props.fontSize};
+    padding-top: 20px;
+`
+
+const ButtonContainer = styled.div`
+    padding-top: 20px;
+`
+
+const Button = styled.button`
+    width: 125px;
+    height: 47px;
+    background: transparent;
+    border: 1px solid white;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    color: white;
+    font-size: 20px;
+    margin: 0 10px;
+    padding-left: 10px;
+
+    &{Button}:hover {
+        background-color: white;
+        color: black;
+    }
+`
+
 export const ChampCard = (props) => { 
     const { coverResult, data, handleHigherClick, handleLowerClick } = props
 
@@ -38,13 +68,12 @@ export const ChampCard = (props) => {
         <ChampCardContainer bgImg={data.loadingScreenUrl}>
             <ChampCardInfoContainer>
                 <ChampCardInfo>
-                    <p>{formatChampNames(data.championName)}</p>
-                    <p>has</p>
-                    { coverResult ? <div>
-                        <button onClick={handleHigherClick}>Higher</button>
-                        <button onClick={handleLowerClick}>Lower</button>
-                    </div>: <p>{formatMatchesPlayed(data.matchesPlayed)}</p>}
-                    <p>matches played.</p>
+                    <TextContainer fontSize="30px">{formatChampNames(data.championName)}</TextContainer>
+                    { coverResult ? <ButtonContainer>
+                        <Button onClick={handleHigherClick}>Higher ▲</Button>
+                        <Button onClick={handleLowerClick}>Lower ▼</Button>
+                    </ButtonContainer>: <TextContainer fontSize="40px">{formatMatchesPlayed(data.matchesPlayed)}</TextContainer>}
+                    <TextContainer fontSize="15px">MATCHES PLAYED</TextContainer>
                 </ChampCardInfo>
             </ChampCardInfoContainer>
         </ChampCardContainer>

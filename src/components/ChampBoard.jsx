@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import styled from "styled-components";
 import { ChampCard } from "./ChampCard";
 import { getRandomChamp } from "../util/getRandomChamp";
@@ -7,18 +7,12 @@ import vsCorrect from "../images/vs_correct.png";
 import vsWrong from "../images/vs_wrong.png";
 
 const GameBoard = styled.div`
-    background-color: LightSlateGrey;
     display: flex;
     flex-direction: column;
     align-items: center;
 `
 
-const ScoreDisplay = styled.p`
-    margin: 5px;
-`
-
 const CardContainer = styled.div`
-    background-color: gray;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -33,12 +27,19 @@ const VSContainer = styled.div`
     background-size: cover;
 `
 
+const TextContainer = styled.div`
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: ${props => props.fontSize};
+    color: white;
+`
+
 export const ChampBoard = (props) => {
     const { championData } = props;
-    const [leftCardChamp, setLeftCardChamp] = useState(getRandomChamp(championData));
-    const [rightCardChamp, setRightCardChamp] = useState(getRandomChamp(championData));
+    const [leftCardChamp, setLeftCardChamp] = useState([]);
+    const [rightCardChamp, setRightCardChamp] = useState([]);
+    const [higherLower, setHigherLower] = useState(false);
     const [coverResult, setCoverResult] = useState(true);
-    const [higherLower, setHigherLower] = useState(parseInt(rightCardChamp.matchesPlayed, 10) >= parseInt(leftCardChamp.matchesPlayed, 10));
     const [currentScore, setCurrentScore] = useState(0);
     const [vsImg, setVSImg] = useState(vsDefault);
 
@@ -80,6 +81,16 @@ export const ChampBoard = (props) => {
         checkUserChoice(userChoice);
     }
 
+    useMemo(() => {
+        const leftChamp = getRandomChamp(championData);
+        const rightChamp = getRandomChamp(championData);
+        const higherLower = parseInt(rightChamp.matchesPlayed, 10) >= parseInt(leftChamp.matchesPlayed, 10)
+
+        setLeftCardChamp(leftChamp);
+        setRightCardChamp(rightChamp);
+        setHigherLower(higherLower);
+    }, []);
+
     return (
         <GameBoard>
             <CardContainer>
@@ -87,7 +98,7 @@ export const ChampBoard = (props) => {
                 <VSContainer color={vsImg} />
                 <ChampCard coverResult={coverResult} data={rightCardChamp} handleHigherClick={handleHigherClick} handleLowerClick={handleLowerClick} />
             </CardContainer>
-            <ScoreDisplay>Score: {currentScore}</ScoreDisplay>
+            <TextContainer fontSize="25px">SCORE: {currentScore}</TextContainer>
         </GameBoard>
     )
 }
