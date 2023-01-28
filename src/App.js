@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import styled from "styled-components";
 import { getChampionData } from "./api/api";
 import summonersRift from "./images/summoners_rift.png";
@@ -19,7 +19,6 @@ const MainContainer = styled.div`
 
 const PageContainer = styled.div`
     display: flex;
-    background: url(${props => props.bgImg});
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -38,38 +37,36 @@ const TextContainer = styled.div`
 
 export const App = () => {
     const [display, setDisplay] = useState()
-    const [isPlaying, setIsPlaying] = useState(false);
     const [championData, setChampionData] = useState([]);
-    const [score, setScore] = useState(0);
-    const [bgImg, setBgImg] = useState(summonersRiftGray);
-
-    const handleIsPlaying = () => {
-        setIsPlaying(!isPlaying)
-    };
+    const [bgImg, setBgImg] = useState(summonersRift);
+    const bgImgRef = useRef(null);
+    const imgRef = useRef(new Image());
 
     const startGame = () => {
         console.log("Starting game...")
         setBgImg(summonersRift);
         setDisplay((<div>
             <ChampBoard 
-                setGameState={handleIsPlaying}
                 championData={championData}
-                score={score}
-                setScore={setScore}
-                setIsPlaying={handleIsPlaying} 
                 endGame={endGame}
                 />
         </div>))
     }
 
     const endGame = (currentScore) => {
-        setBgImg(summonersRiftGray);
+        imgRef.current.src = summonersRiftGray;
+        imgRef.current.onload = () => {
+          setBgImg(summonersRiftGray);
+        }
         setDisplay(<GameOver score={currentScore} start={startGame} />)
     }
 
     useEffect(() => {
+        bgImgRef.current.style.backgroundImage = `url(${bgImg})`
+    }, [bgImg])
+
+    useEffect(() => {
         console.log("Initializing...")
-        setBgImg(summonersRift);
         setDisplay(<StartScreen start={startGame} message="START"/>)
         // eslint-disable-next-line
     }, [championData]);
@@ -81,15 +78,17 @@ export const App = () => {
             if (response.status === 200) {
                 setChampionData(response.data);
             } else {
+                console.log("Unable to retrieve champion data from backend, using sample data")
                 setChampionData(sampleChampionData);
             }
         };
 
         callBackendApi();
+        setBgImg(summonersRift);
     }, [])
     
     return (
-        <PageContainer bgImg={bgImg}>
+        <PageContainer ref={bgImgRef}>
             <TextContainer fontSize="70px">HIGHER LOWER</TextContainer>
             <TextContainer fontSize="30px">League of Legends Champion Edition</TextContainer>
             <MainContainer>

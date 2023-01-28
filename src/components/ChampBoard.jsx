@@ -35,7 +35,7 @@ const TextContainer = styled.div`
 `
 
 export const ChampBoard = (props) => {
-    const { championData } = props;
+    const { championData, endGame } = props;
     const [leftCardChamp, setLeftCardChamp] = useState([]);
     const [rightCardChamp, setRightCardChamp] = useState([]);
     const [higherLower, setHigherLower] = useState(false);
@@ -65,7 +65,7 @@ export const ChampBoard = (props) => {
                 setCoverResult(true);
                 setVSImg(vsDefault);
             } else {
-                props.endGame(currentScore);
+                endGame(currentScore);
             }
         }, 2000);
     }
@@ -89,7 +89,7 @@ export const ChampBoard = (props) => {
         setLeftCardChamp(leftChamp);
         setRightCardChamp(rightChamp);
         setHigherLower(higherLower);
-    }, []);
+    }, [championData]);
 
     return (
         <GameBoard>
