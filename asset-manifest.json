@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/higher-lower-lol-champ-web/static/css/main.c7ec3132.css",
+    "main.js": "/higher-lower-lol-champ-web/static/js/main.99776bbe.js",
+    "static/media/summoners_rift.png": "/higher-lower-lol-champ-web/static/media/summoners_rift.f9d53e479c3b3eddba16.png",
+    "static/media/summoners_rift_bw.png": "/higher-lower-lol-champ-web/static/media/summoners_rift_bw.d2df66006f6a879163ce.png",
+    "index.html": "/higher-lower-lol-champ-web/index.html",
+    "main.c7ec3132.css.map": "/higher-lower-lol-champ-web/static/css/main.c7ec3132.css.map",
+    "main.99776bbe.js.map": "/higher-lower-lol-champ-web/static/js/main.99776bbe.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c7ec3132.css",
+    "static/js/main.99776bbe.js"
+  ]
+}
