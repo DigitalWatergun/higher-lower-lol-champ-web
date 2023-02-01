@@ -7,5 +7,5 @@ The frontend React code for the HigherLower LoL Champ edition project
 Holds all of the ReactJS code used to create the frontend client for the Higher Lower LoL Champ project. 
 
 ### Credits
-- Background Image: https://github.com/InFinity54/LoL_DDragon/blob/master/extras/wallpapers/wallpaper04.png
 - UI Designer: https://www.weichristine.com/
+- Background Image: https://github.com/InFinity54/LoL_DDragon/blob/master/extras/wallpapers/wallpaper04.png
