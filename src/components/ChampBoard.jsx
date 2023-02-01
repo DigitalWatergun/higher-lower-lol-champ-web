@@ -46,7 +46,6 @@ export const ChampBoard = (props) => {
     let userChoice;
     const checkUserChoice = (choice) => {
         setCoverResult(false);
-        console.log("Score: " + currentScore);
         setTimeout(() => {
             if (choice === higherLower) {
                 setVSImg(vsCorrect);
