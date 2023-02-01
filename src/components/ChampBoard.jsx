@@ -47,7 +47,6 @@ export const ChampBoard = (props) => {
     const checkUserChoice = (choice) => {
         setCoverResult(false);
         console.log("Score: " + currentScore);
-        console.log("User Choice: " + choice, "HigherLower: " + higherLower)
         setTimeout(() => {
             if (choice === higherLower) {
                 setVSImg(vsCorrect);
@@ -58,7 +57,10 @@ export const ChampBoard = (props) => {
         setTimeout(() => {
             if (choice === higherLower) {
                 setCurrentScore(currentScore + 1);
-                const newChamp = getRandomChamp(championData);
+                let newChamp = getRandomChamp(championData);
+                while (newChamp.championName === rightCardChamp.championName) {
+                    newChamp = getRandomChamp(championData);
+                }
                 setLeftCardChamp(rightCardChamp);
                 setRightCardChamp(newChamp);
                 setHigherLower(parseInt(newChamp.matchesPlayed, 10) >= parseInt(rightCardChamp.matchesPlayed, 10));
@@ -83,7 +85,10 @@ export const ChampBoard = (props) => {
 
     useMemo(() => {
         const leftChamp = getRandomChamp(championData);
-        const rightChamp = getRandomChamp(championData);
+        let rightChamp = getRandomChamp(championData);
+        while (leftChamp.championName === rightChamp.championName) {
+            rightChamp = getRandomChamp(championData);
+        }
         const higherLower = parseInt(rightChamp.matchesPlayed, 10) >= parseInt(leftChamp.matchesPlayed, 10)
 
         setLeftCardChamp(leftChamp);

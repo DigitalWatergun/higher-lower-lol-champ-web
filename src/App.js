@@ -78,7 +78,7 @@ export const App = () => {
             if (response.status === 200) {
                 setChampionData(response.data);
             } else {
-                console.log("Unable to retrieve champion data from backend, using sample data")
+                console.log("Unable to retrieve champion data from backend. Using sample data for testing. Last updated: 01/31/2023.")
                 setChampionData(sampleChampionData);
             }
         };
